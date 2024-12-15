@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
+import JoiningQuiz from "@/components/JoiningQuiz";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <main>
         <div className="container py-4">
           <h1 className="text-center">Vocabulary Quiz</h1>
+          <JoiningQuiz></JoiningQuiz>
         </div>
       </main>
     </>
