@@ -1,0 +1,89 @@
+{
+    "questions": {
+      "q1": { "title": "What is the capital of France?", "choices": ["Paris", "London", "Berlin", "Madrid"], "correct_choice": 0 },
+      "q2": { "title": "What is the square root of 64?", "choices": ["6", "7", "8", "9"], "correct_choice": 2 },
+      "q3": { "title": "Who wrote 'Hamlet'?", "choices": ["Shakespeare", "Hemingway", "Orwell", "Tolkien"], "correct_choice": 0 },
+      "q4": { "title": "What is the chemical symbol for water?", "choices": ["H", "O", "H2O", "CO2"], "correct_choice": 2 },
+      "q5": { "title": "What is the largest planet in the solar system?", "choices": ["Earth", "Mars", "Jupiter", "Saturn"], "correct_choice": 2 },
+      "q6": { "title": "Who painted the Mona Lisa?", "choices": ["Van Gogh", "Leonardo da Vinci", "Picasso", "Michelangelo"], "correct_choice": 1 },
+      "q7": { "title": "What is 5 x 5?", "choices": ["20", "25", "30", "35"], "correct_choice": 1 },
+      "q8": { "title": "Which ocean is the largest?", "choices": ["Atlantic", "Indian", "Pacific", "Arctic"], "correct_choice": 2 },
+      "q9": { "title": "What is the capital of Japan?", "choices": ["Tokyo", "Beijing", "Seoul", "Bangkok"], "correct_choice": 0 },
+      "q10": { "title": "What is the boiling point of water in Celsius?", "choices": ["50", "75", "100", "125"], "correct_choice": 2 },
+      "q11": { "title": "What is the powerhouse of the cell?", "choices": ["Nucleus", "Ribosome", "Mitochondria", "Chloroplast"], "correct_choice": 2 },
+      "q12": { "title": "Who developed the theory of relativity?", "choices": ["Newton", "Einstein", "Galileo", "Tesla"], "correct_choice": 1 },
+      "q13": { "title": "Which is the smallest continent?", "choices": ["Asia", "Antarctica", "Europe", "Australia"], "correct_choice": 3 },
+      "q14": { "title": "What is the main ingredient in sushi?", "choices": ["Chicken", "Fish", "Beef", "Pork"], "correct_choice": 1 },
+      "q15": { "title": "What is the national flower of Japan?", "choices": ["Rose", "Tulip", "Cherry Blossom", "Sunflower"], "correct_choice": 2 },
+      "q16": { "title": "What is the speed of light?", "choices": ["300,000 km/s", "150,000 km/s", "1,000 km/s", "10,000 km/s"], "correct_choice": 0 },
+      "q17": { "title": "Who is known as the Father of Computers?", "choices": ["Alan Turing", "Charles Babbage", "Steve Jobs", "Bill Gates"], "correct_choice": 1 },
+      "q18": { "title": "Which element has the atomic number 1?", "choices": ["Oxygen", "Hydrogen", "Helium", "Carbon"], "correct_choice": 1 },
+      "q19": { "title": "What is the national language of Canada?", "choices": ["English", "French", "Both", "Spanish"], "correct_choice": 2 },
+      "q20": { "title": "What is the sum of angles in a triangle?", "choices": ["90°", "180°", "270°", "360°"], "correct_choice": 1 }
+    },
+    "quizzes": {
+      "quiz1": { "title": "General Knowledge Quiz", "status": "active" },
+      "quiz2": { "title": "Science and Technology Quiz", "status": "active" },
+      "quiz3": { "title": "Geography and Culture Quiz", "status": "active" }
+    },
+    "questions_in_quiz": {
+      "quiz1": {
+        "questions": [
+          { "question_id": "q1", "score": 10 },
+          { "question_id": "q2", "score": 10 },
+          { "question_id": "q3", "score": 10 },
+          { "question_id": "q4", "score": 10 },
+          { "question_id": "q5", "score": 10 },
+          { "question_id": "q6", "score": 10 },
+          { "question_id": "q7", "score": 10 },
+          { "question_id": "q8", "score": 10 },
+          { "question_id": "q9", "score": 10 },
+          { "question_id": "q10", "score": 10 },
+          { "question_id": "q11", "score": 10 },
+          { "question_id": "q12", "score": 10 },
+          { "question_id": "q13", "score": 10 },
+          { "question_id": "q14", "score": 10 },
+          { "question_id": "q15", "score": 10 }
+        ]
+      },
+      "quiz2": {
+        "questions": [
+          { "question_id": "q6", "score": 20 },
+          { "question_id": "q7", "score": 20 },
+          { "question_id": "q8", "score": 20 },
+          { "question_id": "q9", "score": 20 },
+          { "question_id": "q10", "score": 20 },
+          { "question_id": "q11", "score": 20 },
+          { "question_id": "q12", "score": 20 },
+          { "question_id": "q13", "score": 20 },
+          { "question_id": "q14", "score": 20 },
+          { "question_id": "q15", "score": 20 },
+          { "question_id": "q16", "score": 20 },
+          { "question_id": "q17", "score": 20 },
+          { "question_id": "q18", "score": 20 },
+          { "question_id": "q19", "score": 20 },
+          { "question_id": "q20", "score": 20 }
+        ]
+      },
+      "quiz3": {
+        "questions": [
+          { "question_id": "q1", "score": 15 },
+          { "question_id": "q3", "score": 15 },
+          { "question_id": "q5", "score": 15 },
+          { "question_id": "q7", "score": 15 },
+          { "question_id": "q9", "score": 15 },
+          { "question_id": "q11", "score": 15 },
+          { "question_id": "q13", "score": 15 },
+          { "question_id": "q15", "score": 15 },
+          { "question_id": "q17", "score": 15 },
+          { "question_id": "q19", "score": 15 },
+          { "question_id": "q2", "score": 15 },
+          { "question_id": "q4", "score": 15 },
+          { "question_id": "q6", "score": 15 },
+          { "question_id": "q8", "score": 15 },
+          { "question_id": "q10", "score": 15 }
+        ]
+      }
+    }
+  }
+  
