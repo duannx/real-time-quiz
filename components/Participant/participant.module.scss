@@ -1,8 +1,10 @@
 .participant {
     display: flex;
-    padding: 1em;
+    padding: 1em 2em;
     gap: 1em;
     align-items: center;
+    background-color: #e5f9e2;
+    border-radius: 100px;
     &__avatar-block {
         width: 2em;
         height: 2em;
@@ -28,7 +30,8 @@
     &__rank {
         width: 2em;
         height: 2em;
-        background-color: #f4d4ff;
+        background-color: #e88013;
+        color: #FFF;
         display: flex;
         justify-content: center;
         align-items: center;

@@ -1,11 +1,20 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
 .form {
-    padding: 2em;
+    padding: 1em;
     border-radius: 1em;
     max-width: 500px;
     border: solid 1px;
     display: flex;
     flex-direction: column;
     gap: 1.5em;
+
+    @include media-breakpoint-up(sm) {
+        padding: 2em;
+    }
+
 }
 
 .question {
