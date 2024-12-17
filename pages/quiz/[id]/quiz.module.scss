@@ -1,0 +1,13 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+.quiz-page-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    align-items: start;
+    @include media-breakpoint-up(md) {
+        grid-template-columns: 1fr 1fr;
+    }
+}

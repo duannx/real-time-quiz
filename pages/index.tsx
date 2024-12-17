@@ -11,8 +11,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <div className="container py-4">
+      <main className={styles['home-page']}>
+        <div className={`container`}>
           <h1 className="text-center">Vocabulary Quiz</h1>
           <JoiningQuiz></JoiningQuiz>
         </div>
