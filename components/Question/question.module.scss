@@ -1,0 +1,28 @@
+.form {
+    padding: 2em;
+    border-radius: 1em;
+    max-width: 500px;
+    border: solid 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+
+    &__title {
+        text-align: center;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    &__choices {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+}

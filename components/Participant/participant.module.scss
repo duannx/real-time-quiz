@@ -1,0 +1,38 @@
+.participant {
+    display: flex;
+    padding: 1em;
+    gap: 1em;
+    align-items: center;
+    &__avatar-block {
+        width: 2em;
+        height: 2em;
+        background-color: #f4d4ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    &__avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    &__info {
+        flex-grow: 1;
+    }
+    &__name {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    &__rank {
+        width: 2em;
+        height: 2em;
+        background-color: #f4d4ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+}
