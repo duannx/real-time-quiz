@@ -1,10 +1,14 @@
 import quizAppBackend from "@/services/quiz-service";
 import { getRandomAvatar } from "@/services/quiz-service/helper";
+import { DEFAULT_ERROR_MESSAGE } from "@/utils/constants";
+import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 
 export default function JoiningQuiz() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter()
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     setIsLoading(true);
@@ -16,22 +20,23 @@ export default function JoiningQuiz() {
       if (!quizId) throw "Quiz ID is required";
       if (!name) throw "Your name is required";
       const avatar = getRandomAvatar();
-      const userId = await quizAppBackend.createUser(name, avatar);
-      const quiz = await quizAppBackend.joinQuiz(quizId, userId);
+      const user = await quizAppBackend.createUser(name, avatar);
+      quizAppBackend.setCurrentUser(user)
+      const quiz = await quizAppBackend.joinQuiz(quizId, user.id);
       if (!quiz) {
         throw "Quiz ID is invalid";
       }
       quizAppBackend.setCurrentQuiz(quiz);
-      console.log("quiz", quiz);
+      router.push(`/quiz/${quiz.quizId}`)
     } catch (error) {
-      console.log("error", error);
+      console.error("error", error);
       if (typeof error === "string") {
         setError(error);
       }
       if ((error as Error).message) {
         setError((error as Error).message);
       }
-      setError((error as object).toString?.() || "Something went wrong!");
+      setError((error as object).toString?.() || DEFAULT_ERROR_MESSAGE);
     } finally {
       setIsLoading(false);
     }

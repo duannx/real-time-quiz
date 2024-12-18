@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./participant.module.scss";
 
 export interface Participant {
@@ -16,7 +17,7 @@ export default function Participant({
   return (
     <div className={styles["participant"]}>
       <div className={styles["participant__avatar-block"]}>
-        <img className={styles["participant__avatar-image"]} src={avatar}></img>
+        <Image className={styles["participant__avatar-image"]} src={avatar} alt="avatar" width={100} height={100}></Image>
       </div>
       <div className={styles["participant__info"]}>
         <div className={styles["participant__name"]}>

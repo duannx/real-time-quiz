@@ -1,23 +1,46 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Choice from "../Choice";
 import styles from "./question.module.scss";
+import { Question as QuestionType } from "@/services/quiz-service/type";
+import { calculateScore } from "@/services/quiz-service/helper";
+import quizAppBackend from "@/services/quiz-service";
 
-const question = {
-  title: "What does the word 'benevolent' mean?",
-  choices: [
-    "Kind and generous",
-    "Harsh and cruel",
-    "Loud and noisy",
-    "Small and insignificant",
-  ],
-  answer: 0,
-};
-
-export default function Question() {
+export default function Question({
+  question,
+  quizId,
+  userId,
+  onAnswer
+}: {
+  question: QuestionType;
+  quizId: string;
+  userId: string;
+  onAnswer(score: number): void
+}) {
   const [selectedChoice, setSelectedChoice] = useState(-1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const deltaScore = calculateScore(question, selectedChoice);
+      await quizAppBackend.answer(
+        quizId,
+        userId,
+        question.question_id,
+        selectedChoice,
+        deltaScore
+      );
+      onAnswer(deltaScore)
+    } catch (error) {
+      console.error("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
-    <form className={styles["form"]}>
+    <form onSubmit={onSubmit} className={styles["form"]}>
       <div className={styles["question"]}>
         <h2 className={styles["question__title"]}>{question.title}</h2>
         <div className={styles["question__choices"]}>
@@ -35,7 +58,21 @@ export default function Question() {
           })}
         </div>
       </div>
-      <button className={`${styles["button"]} btn btn-success`}>Answer</button>
+      <button
+        disabled={selectedChoice == -1 || isLoading}
+        className={`${styles["button"]} btn btn-success`}
+      >
+        {isLoading ? (
+          <span
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+            id="spinner"
+          ></span>
+        ) : (
+          "Answer"
+        )}
+      </button>
     </form>
   );
 }

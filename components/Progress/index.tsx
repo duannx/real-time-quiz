@@ -19,7 +19,7 @@ export default function Progress({
       <div className={styles["progress__top"]}>
         <div className={styles["progress__number"]}>{progress}</div>
         <div className={styles["progress__name"]}>{name}</div>
-        <div className={styles["progress__close-button"]}><Close></Close></div>
+        <button type="button" className={styles["progress__close-button"]} data-bs-toggle="modal" data-bs-target="#closeModal"><Close></Close></button>
       </div>
       <div className={styles["progress__bottom"]}>
         <div className={styles["progress__score"]}>Score: {score}</div>

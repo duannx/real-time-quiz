@@ -1,8 +1,9 @@
-import { Quiz, QuizBackendStrategy, UserScore } from "./type";
+import { Quiz, QuizBackendStrategy, UserDataWithId, UserScore } from "./type";
 
-class QuizApp {
+class QuizAppBackend {
   private backend: QuizBackendStrategy | null = null;
   private currentQuiz: Quiz | null = null;
+  private currentUser: UserDataWithId | null = null;
 
   constructor() {}
 
@@ -10,7 +11,15 @@ class QuizApp {
     this.backend = backend;
   }
 
-  setCurrentQuiz(quiz: Quiz) {
+  setCurrentUser(user: UserDataWithId | null) {
+    this.currentUser = user;
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
+
+  setCurrentQuiz(quiz: Quiz | null) {
     this.currentQuiz = quiz;
   }
 
@@ -18,7 +27,7 @@ class QuizApp {
     return this.currentQuiz;
   }
 
-  async createUser(name: string, avatar: string): Promise<string> {
+  async createUser(name: string, avatar: string): Promise<UserDataWithId> {
     return this.backend!.createUser(name, avatar);
   }
 
@@ -38,11 +47,11 @@ class QuizApp {
 
   viewLeaderboard(
     quizId: string,
-    callback: (leaderboard: UserScore[]) => void
+    callback: (leaderboard: UserScore[]) => unknown
   ): () => void {
     return this.backend!.viewLeaderboard(quizId, callback);
   }
 }
 
-const quizAppBackend = new QuizApp();
+const quizAppBackend = new QuizAppBackend();
 export default quizAppBackend;

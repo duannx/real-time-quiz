@@ -1,6 +1,6 @@
 export interface Question {
   question_id: string;
-  text: string;
+  title: string;
   choices: string[];
   type: string;
   correct_choice: number;
@@ -15,8 +15,8 @@ export interface QuizQuestion {
 export interface UserScore {
   userId: string;
   score: number;
-  name?: string;
-  avatar?: string;
+  name: string;
+  avatar: string;
 }
 
 export interface Quiz {
@@ -35,9 +35,12 @@ export interface UserData {
   created_at?: string;
   updated_at?: string;
 }
+export interface UserDataWithId extends UserData {
+  id: string;
+}
 
 export interface QuizBackendStrategy {
-  createUser(name: string, avatar: string): Promise<string>;
+  createUser(name: string, avatar: string): Promise<UserDataWithId>;
   joinQuiz(quizId: string, userId: string): Promise<Quiz>;
   answer(
     quizId: string,

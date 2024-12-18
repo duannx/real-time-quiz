@@ -8,9 +8,14 @@ import {
   push,
   update,
 } from "firebase/database";
-import { QuizBackendStrategy, QuizQuestion, UserData, UserScoreData } from "./type";
-
-
+import {
+  Quiz,
+  QuizBackendStrategy,
+  QuizQuestion,
+  UserData,
+  UserDataWithId,
+  UserScoreData,
+} from "./type";
 
 export class FirebaseQuizBackend implements QuizBackendStrategy {
   private db: ReturnType<typeof getDatabase>;
@@ -29,13 +34,12 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
 
     const app = initializeApp(firebaseConfig);
     this.db = getDatabase(app);
-    console.log("firebase done", this.db);
   }
 
-  async createUser(name: string, avatar: string): Promise<string> {
-    const usersRef = ref(this.db, 'users');
+  async createUser(name: string, avatar: string): Promise<UserDataWithId> {
+    const usersRef = ref(this.db, "users");
     const newUserRef = push(usersRef);
-    
+
     const userData: UserData = {
       name,
       avatar,
@@ -44,25 +48,11 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
     };
 
     await set(newUserRef, userData);
-    
-    return newUserRef.key!;
+
+    return { id: newUserRef.key!, ...userData };
   }
 
-  async joinQuiz(
-    quizId: string,
-    userId: string
-  ): Promise<{
-    quizId: string;
-    title: string;
-    questions: {
-      question_id: string;
-      text: string;
-      choices: string[];
-      type: string;
-      correct_choice: number;
-      score: number;
-    }[];
-  }> {
+  async joinQuiz(quizId: string, userId: string): Promise<Quiz> {
     try {
       // Fetch quiz details
       const quizRef = ref(this.db, `quizzes/${quizId}`);
@@ -77,28 +67,29 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
       // Fetch questions for the quiz
       const questionsInQuizRef = ref(this.db, `questions_in_quiz/${quizId}`);
       const questionsInQuizSnapshot = await get(questionsInQuizRef);
-      
+
       if (!questionsInQuizSnapshot.exists()) {
         throw new Error("Questions for this quiz not found");
       }
 
-      const questionsInQuiz: QuizQuestion[] = questionsInQuizSnapshot.val().questions;
+      const questionsInQuiz: QuizQuestion[] =
+        questionsInQuizSnapshot.val().questions;
 
       // Fetch full question details
-      const questionsRef = ref(this.db, 'questions');
+      const questionsRef = ref(this.db, "questions");
       const questionsSnapshot = await get(questionsRef);
       const allQuestions = questionsSnapshot.val();
 
       // Combine quiz questions with their full details
-      const fullQuestions = questionsInQuiz.map(quizQuestion => {
+      const fullQuestions = questionsInQuiz.map((quizQuestion) => {
         const questionDetails = allQuestions[quizQuestion.question_id];
         return {
           question_id: quizQuestion.question_id,
-          text: questionDetails.title,
+          title: questionDetails.title,
           choices: questionDetails.choices,
-          type: 'multiple_choice', // Assuming all are multiple choice
+          type: "multiple_choice", // Assuming all are multiple choice
           correct_choice: questionDetails.correct_choice,
-          score: quizQuestion.score
+          score: quizQuestion.score,
         };
       });
 
@@ -107,13 +98,13 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
       const initialScore: UserScoreData = { total_score: 0 };
       await set(userScoreRef, initialScore);
 
-      return { 
-        quizId, 
+      return {
+        quizId,
         title: quizDetails.title,
-        questions: fullQuestions
+        questions: fullQuestions,
       };
     } catch (error) {
-      console.log("error", error);
+      console.error("error", error);
       throw error;
     }
   }
@@ -127,23 +118,23 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
   ): Promise<number> {
     // Store individual answer
     const answerRef = ref(this.db, `answers/${quizId}/${userId}/${questionId}`);
-    await set(answerRef, { 
-      question_id: questionId, 
-      score, 
-      answer 
+    await set(answerRef, {
+      question_id: questionId,
+      score,
+      answer,
     });
 
     // Update total quiz score
     const userScoreRef = ref(this.db, `quiz_scores/${quizId}/${userId}`);
-    
+
     // Get current score and add new score
     const currentScoreSnapshot = await get(userScoreRef);
     const currentScoreData = currentScoreSnapshot.val() as UserScoreData | null;
     const currentScore = currentScoreData?.total_score || 0;
-    const newScore = currentScore + score
-    
-    const updatedScore: UserScoreData = { 
-      total_score: newScore
+    const newScore = currentScore + score;
+
+    const updatedScore: UserScoreData = {
+      total_score: newScore,
     };
 
     await update(userScoreRef, updatedScore);
@@ -153,18 +144,20 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
 
   viewLeaderboard(
     quizId: string,
-    callback: (leaderboard: { 
-      userId: string; 
-      score: number; 
-      name: string; 
-      avatar: string 
-    }[]) => void
+    callback: (
+      leaderboard: {
+        userId: string;
+        score: number;
+        name: string;
+        avatar: string;
+      }[]
+    ) => void
   ): () => void {
     // Reference to quiz scores
     const scoresRef = ref(this.db, `quiz_scores/${quizId}`);
-    
+
     // Reference to all users
-    const usersRef = ref(this.db, 'users');
+    const usersRef = ref(this.db, "users");
 
     const unsubscribe = onValue(scoresRef, async (scoresSnapshot) => {
       if (!scoresSnapshot.exists()) {
@@ -177,22 +170,22 @@ export class FirebaseQuizBackend implements QuizBackendStrategy {
       const users = usersSnapshot.val() || {};
 
       const scoresData = scoresSnapshot.val() as Record<string, UserScoreData>;
-      const leaderboard: { 
-        userId: string; 
-        score: number; 
-        name: string; 
-        avatar: string 
+      const leaderboard: {
+        userId: string;
+        score: number;
+        name: string;
+        avatar: string;
       }[] = Object.entries(scoresData).map(([userId, scoreData]) => {
         // Find user details
         const userDetails = Object.entries(users).find(
           ([key]) => key === userId
         )?.[1] as UserData | undefined;
 
-        return { 
-          userId, 
+        return {
+          userId,
           score: scoreData.total_score || 0,
-          name: userDetails?.name || 'Unknown',
-          avatar: userDetails?.avatar || ''
+          name: userDetails?.name || "Unknown",
+          avatar: userDetails?.avatar || "",
         };
       });
 
