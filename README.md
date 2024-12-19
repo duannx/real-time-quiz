@@ -116,7 +116,8 @@
 
 ## 5. High-level design
 
-![detailed-design.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/95fbcf0b-770c-4279-b7a0-f6728eda88a9/2f7940b6-4e38-4733-abed-48364889e658/detailed-design.png)
+![detailed-design](https://github.com/user-attachments/assets/fc62e116-340d-473e-8a68-4220dbb639c7)
+
 
 ## 6. Components Description
 
